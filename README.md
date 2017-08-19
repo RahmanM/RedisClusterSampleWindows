@@ -1,17 +1,17 @@
 # RedisClusterSampleWindows
 Sample configuring and using Redis cluster in c# and in Windows
 
-Stemps:
+Steps:
 
 - Download Redis
 - Copy Redis to appropriate machines
 - Change the config files 
-> Ip Address
-> Port number
-> cluster-enabled yes
-> cluster-config-file nodes-6380.conf
-> cluster-node-timeout 15000
-> appendonly yes
+-- Ip Address
+-- Port number
+-- cluster-enabled yes
+-- cluster-config-file nodes-6380.conf
+-- cluster-node-timeout 15000
+-- appendonly yes
 - Run all the nodes via redis-server.exe <config-name>.conf
 - Let the clusters know about each other. 
 
@@ -25,7 +25,7 @@ FOR /l %i in (5000,1,10923) DO redis-cli.exe -h 192.168.1.107 -p 6380 CLUSTER AD
 FOR /l %i in (10924,1,16383) DO redis-cli.exe -h 192.168.1.108 -p 6379 CLUSTER ADDSLOTS %i	
 
 - To test:
-> Run the redis-cli via redis-cli -h <node-ip-address> -p <bide-port-number> -c
-> Type CLUSTER INFO
+-- Run the redis-cli via redis-cli -h <node-ip-address> -p <bide-port-number> -c
+-- Type CLUSTER INFO
 
 - Run the .net client to add sample data ....
