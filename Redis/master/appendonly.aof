@@ -1,0 +1,172 @@
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+SET
+$2
+c1
+$166
+{
+  "$id": "1",
+  "Id": 1,
+  "Name": "rahman",
+  "Address": {
+    "$id": "2",
+    "Line1": "address 1",
+    "Line2": "address 2",
+    "City": "sydney"
+  }
+}
+*2
+$6
+SELECT
+$1
+0
+*3
+$3
+SET
+$2
+c1
+$166
+{
+  "$id": "1",
+  "Id": 1,
+  "Name": "rahman",
+  "Address": {
+    "$id": "2",
+    "Line1": "address 1",
+    "Line2": "address 2",
+    "City": "sydney"
+  }
+}
+*3
+$6
+SCRIPT
+$4
+LOAD
+$358
+
+local result=redis.call('HMSET', KEYS[1], 'value', ARGV[1], 'type', ARGV[2], 'expiration', ARGV[3], 'timeout', ARGV[4], 'created', ARGV[5], 'defaultExpiration', ARGV[6])
+redis.call('HINCRBY', KEYS[1], 'version', 1)
+if ARGV[3] > '1' and ARGV[4] ~= '0' then
+    redis.call('PEXPIRE', KEYS[1], ARGV[4])
+else
+    redis.call('PERSIST', KEYS[1])
+end
+return result
+*3
+$6
+SCRIPT
+$4
+LOAD
+$422
+
+if redis.call('HSETNX', KEYS[1], 'value', ARGV[1]) == 1 then
+    local result=redis.call('HMSET', KEYS[1], 'type', ARGV[2], 'expiration', ARGV[3], 'timeout', ARGV[4], 'created', ARGV[5], 'version', 1, 'defaultExpiration', ARGV[6])
+    if ARGV[3] > '1' and ARGV[4] ~= '0' then
+        redis.call('PEXPIRE', KEYS[1], ARGV[4])
+    else
+        redis.call('PERSIST', KEYS[1])
+    end
+    return result
+else
+    return nil
+end
+*3
+$6
+SCRIPT
+$4
+LOAD
+$315
+
+if redis.call('HGET', KEYS[1], 'version') == ARGV[2] then
+    local result=redis.call('HSET', KEYS[1], 'value', ARGV[1])
+    redis.call('HINCRBY', KEYS[1], 'version', 1)
+    if ARGV[3] == '2' and ARGV[4] ~= '0' then
+        redis.call('PEXPIRE', KEYS[1], ARGV[4])
+    end
+    return result;
+else
+    return nil
+end
+*3
+$6
+SCRIPT
+$4
+LOAD
+$311
+
+local result = redis.call('HMGET', KEYS[1], 'value', 'expiration', 'timeout', 'created', 'type', 'version', 'defaultExpiration')
+if (result[2] and result[2] == '2') then
+    if (result[3] and result[3] ~= '' and result[3] ~= '0') then
+        redis.call('PEXPIRE', KEYS[1], result[3])
+    end
+end
+return result
+*3
+$6
+SCRIPT
+$4
+LOAD
+$358
+
+local result=redis.call('HMSET', KEYS[1], 'value', ARGV[1], 'type', ARGV[2], 'expiration', ARGV[3], 'timeout', ARGV[4], 'created', ARGV[5], 'defaultExpiration', ARGV[6])
+redis.call('HINCRBY', KEYS[1], 'version', 1)
+if ARGV[3] > '1' and ARGV[4] ~= '0' then
+    redis.call('PEXPIRE', KEYS[1], ARGV[4])
+else
+    redis.call('PERSIST', KEYS[1])
+end
+return result
+*3
+$6
+SCRIPT
+$4
+LOAD
+$422
+
+if redis.call('HSETNX', KEYS[1], 'value', ARGV[1]) == 1 then
+    local result=redis.call('HMSET', KEYS[1], 'type', ARGV[2], 'expiration', ARGV[3], 'timeout', ARGV[4], 'created', ARGV[5], 'version', 1, 'defaultExpiration', ARGV[6])
+    if ARGV[3] > '1' and ARGV[4] ~= '0' then
+        redis.call('PEXPIRE', KEYS[1], ARGV[4])
+    else
+        redis.call('PERSIST', KEYS[1])
+    end
+    return result
+else
+    return nil
+end
+*3
+$6
+SCRIPT
+$4
+LOAD
+$315
+
+if redis.call('HGET', KEYS[1], 'version') == ARGV[2] then
+    local result=redis.call('HSET', KEYS[1], 'value', ARGV[1])
+    redis.call('HINCRBY', KEYS[1], 'version', 1)
+    if ARGV[3] == '2' and ARGV[4] ~= '0' then
+        redis.call('PEXPIRE', KEYS[1], ARGV[4])
+    end
+    return result;
+else
+    return nil
+end
+*3
+$6
+SCRIPT
+$4
+LOAD
+$311
+
+local result = redis.call('HMGET', KEYS[1], 'value', 'expiration', 'timeout', 'created', 'type', 'version', 'defaultExpiration')
+if (result[2] and result[2] == '2') then
+    if (result[3] and result[3] ~= '' and result[3] ~= '0') then
+        redis.call('PEXPIRE', KEYS[1], result[3])
+    end
+end
+return result
