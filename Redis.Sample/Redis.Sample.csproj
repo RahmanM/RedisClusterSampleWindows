@@ -55,6 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="CacheManagerWorker.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="Dumper.cs" />
+    <Compile Include="ObjectDumper.cs" />
     <Compile Include="PlainRedisWorker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
